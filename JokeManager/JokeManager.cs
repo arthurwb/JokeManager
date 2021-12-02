@@ -17,7 +17,7 @@ namespace JokeManagerNamespace
             Config.password = "Qbert42Fish";
             Config.server = "IL-Server-002.uccc.uc.edu\\Mssqlserver2019";
             Config.database = "3045Fall2021FinalProject";
-            status = Utils.ExecuteNonQuery("INSERT INTO tJoke(UCID, Joke) VALUES( 'nicholdw', 'a cow does something')", System.Data.CommandType.Text,null, null);
+            status = Utils.ExecuteNonQuery("UPDATE tJoke SET Joke = '" + joke + "' WHERE UCID = '" + UCID + "';", System.Data.CommandType.Text,null, null);
 
             return status;
         }
@@ -73,9 +73,9 @@ namespace JokeManagerNamespace
 
                 CheckConnection();
                 System.Data.SqlClient.SqlCommand objCmd = Config.myConnection.CreateCommand();
+                objCmd.Parameters.Clear();          // Just in case we used any the last time we called this
                 objCmd.CommandText = pSQL;
                 objCmd.CommandType = pCommandType;      // The default is 'text', which implies an SQL string
-                objCmd.Parameters.Clear();          // Just in case we used any the last time we called this
                 if (parameters != null)
                 {
                     foreach (SqlParameter parameter in parameters) { objCmd.Parameters.Add(parameter); }
