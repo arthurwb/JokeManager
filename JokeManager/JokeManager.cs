@@ -2,6 +2,16 @@
  * Bill Nicholson
  * nicholdw@ucmail.uc.edu
  */
+/*
+ * :EDITED BY:
+ * William Arthur
+ * arthurwb@mail.uc.edu
+ * IT 3045
+ * Final Project
+ * Due December 7
+ * Description: Create a GUI for a program that addes a joke and usernamen to a database. 
+ * Citations:
+ */
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -17,7 +27,7 @@ namespace JokeManagerNamespace
             Config.password = "Qbert42Fish";
             Config.server = "IL-Server-002.uccc.uc.edu\\Mssqlserver2019";
             Config.database = "3045Fall2021FinalProject";
-            status = Utils.ExecuteNonQuery("UPDATE tJoke SET Joke = '" + joke + "' WHERE UCID = '" + UCID + "';", System.Data.CommandType.Text,null, null);
+            status = Utils.ExecuteNonQuery("IF EXISTS(SELECT * FROM tJoke WHERE UCID = '" + UCID +"') UPDATE tJoke SET joke = '" + joke +"' WHERE UCID = '" + UCID +"' ELSE INSERT INTO tJoke(UCID, joke) VALUES('" + UCID +"', '" + joke +"');", System.Data.CommandType.Text, null, null);
 
             return status;
         }
